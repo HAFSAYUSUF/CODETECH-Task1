@@ -1,0 +1,67 @@
+CREATE DATABASE MER;
+USE MER;
+CREATE TABLE Departments(
+  DepartmentId INT PRIMARY KEY AUTO_INCREMENT,
+  DepartmentName VARCHAR(100) NOT NULL
+);
+INSERT INTO Departments(DepartmentName)
+VALUE
+('Human Resources'),
+('Finance'),
+('Engineering'),
+('sales');
+use mer;
+CREATE TABLE JobPosition(
+    jobid INT PRIMARY KEY AUTO_INCREMENT,
+    jobtitle  varchar(100) NOT NULL,
+    jobdetails TEXT
+    );
+INSERT INTO JobPosition(jobtitle,jobdetails)
+VALUE
+('Software Engineer','develops and maintan software'),
+('HR MANAGER','HR related activities'),
+('Accountant','Hndles financial matters'),
+('Sales Executive','Manages sales activities');
+select * from Employees;
+CREATE TABLE  Employees(
+  FirstName VARCHAR(100) NOT NULL,
+  LastName VARCHAR(100) NOT NULL,
+  DOB DATE NOT NULL,
+  DepartmentId INT,
+  jobid  INT,
+  Salary DECIMAL(10,2) NOT NULL,
+  Date_Of_Joining DATE NOT NULL,
+  EmployeeId INT,
+  FOREIGN KEY (DepartmentId) REFERENCES Departments(DepartmentID),
+  FOREIGN KEY(jobid) REFERENCES JobPosition(jobid)
+  );
+  INSERT INTO Employees (FirstName,LastName,DOB,DepartmentId,jobid,Salary,Date_of_joining)
+  VALUES
+  ('Hafsa','Yusuf','2003-01-20',3,1,100000.00,'2024-06-3'),
+  ('Lisa','Alex','1996-02-3',1,2,64000,'2019-06-7'),
+  ('lorence','denny','2000-01-4',2,3,80000,'2023-08-5'),
+  ('Meena','krishna','1993-09-10',4,4,60000,'2024-12-2');
+  SELECT  Employees.Firstname,Employees.Lastname,Departments.DepartmentName
+  FROM Employees
+  JOIN Departments ON Employees.DepartmentId=Departments.DepartmentId;
+  SELECT Employees.FirstName,Employees.LastName,JobPosition.jobtitle,Employees.Salary
+  FROM Employees
+  JOIN JobPosition ON Employees.jobid = JobPosition.jobid;
+  SELECT Employees.FirstName,Employees.LastName,Employees.salary
+  FROM Employees
+  WHERE Employees.Salary > 70000;
+  SELECT Employees.FirstName, Employees.LastName,Employees.Date_Of_Joining
+  FROM Employees
+  WHERE Employees.Date_of_joining >'2020-01-20';
+ SELECT AVG(Employees.Salary)AS AVERAGESALARY
+ FROM Employees;
+ SELECT Employees.FirsTName,Employees.LastName
+ FROM Employees
+ WHERE Employees.FirstName LIKE 'H%';
+ SELECT Departments.DepartmentName
+ FROM Departments
+ LEFT JOIN Employees ON Departments.DepartmentId= Employees.DepartmentId
+ WHERE Employees.EmployeeId IS NULL;
+ SELECT Employees.FirstName,Employees.LastName,Employees.Salary
+ FROM Employees
+ ORDER BY Employees.Salary DESC;
